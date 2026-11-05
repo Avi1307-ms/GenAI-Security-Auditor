@@ -1,0 +1,33 @@
+
+name: PR Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # Step 2: Display PR information
+      - name: Say hello
+        run: |
+          echo "Hello from GenAI Security Auditor!"
+          echo "Reviewing PR #${{ github.event.pull_request.number }}"
+
+      # Step 3: List changed files
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run audit script
+        run: python src/audit.py ${{ github.base_ref }}
