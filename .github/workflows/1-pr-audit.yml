@@ -1,0 +1,20 @@
+name: PR Audit
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Say hello
+        run: echo "Hello from GenAI Security Auditor! Reviewing PR #${{ github.event.pull_request.number }}"
+
+      - name: List changed files
+        run: git diff --name-only origin/main...HEAD
